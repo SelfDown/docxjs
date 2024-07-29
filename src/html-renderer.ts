@@ -1027,8 +1027,8 @@ section.${c}>footer { z-index: 1; }
 
 	renderImage(elem: IDomImage) {
 		let result = this.createElement("img");
-				/**
-		 * 显示弹框
+		/**
+		 * click 显示弹框
 		 * @param {string} imageDataUrl - 图片的 Data URL
 		 */
 		function showModal(imageDataUrl) {
