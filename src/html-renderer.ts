@@ -1027,6 +1027,71 @@ section.${c}>footer { z-index: 1; }
 
 	renderImage(elem: IDomImage) {
 		let result = this.createElement("img");
+				/**
+		 * 显示弹框
+		 * @param {string} imageDataUrl - 图片的 Data URL
+		 */
+		function showModal(imageDataUrl) {
+			// 创建弹框元素
+			const modal = document.createElement('div');
+			modal.style.display = 'none';
+			modal.style.position = 'fixed';
+			modal.style.zIndex = '1000';
+			modal.style.left = '0';
+			modal.style.top = '0';
+			modal.style.width = '100%';
+			modal.style.height = '100%';
+			modal.style.overflow = 'auto';
+			modal.style.backgroundColor = 'rgba(0,0,0,0.4)';
+			// modal.style.transform = 'scale(1.5)'; // 默认缩放1.5倍
+			const modalContent = document.createElement('div');
+			modalContent.style.backgroundColor = '#fefefe';
+			modalContent.style.margin = '15% auto';
+			modalContent.style.padding = '20px';
+			modalContent.style.border = '1px solid #888';
+			modalContent.style.width = '80%';
+			modalContent.style.maxWidth = '600px';
+			modalContent.style.textAlign = 'center';
+			modalContent.style.position = 'relative';
+
+			const modalImage = document.createElement('img');
+			modalImage.alt = 'Blob Image';
+			modalImage.src = imageDataUrl;
+			modalImage.style.maxWidth = '100%';
+			modalImage.style.maxHeight = '100%';
+			modalImage.style.transform = 'scale(1.5)'; // 默认缩放1.5倍
+
+			modalContent.appendChild(modalImage);
+			modal.appendChild(modalContent);
+			document.body.appendChild(modal);
+
+			// 显示弹框
+			modal.style.display = 'block';
+
+			// 点击图片外部区域关闭遮罩
+			modal.onclick = function(event) {
+				if (event.target === modal) {
+					modal.style.display = 'none';
+				}
+			};
+
+			// 支持图片缩放
+			let scale = 1.5; // 初始缩放比例
+			modalImage.onwheel = function(event) {
+				event.preventDefault();
+				if (event.deltaY < 0) {
+					scale += 0.1;
+				} else {
+					scale -= 0.1;
+				}
+				modalImage.style.transform = `scale(${scale})`;
+			};
+		}
+		result.onclick=function () {
+			showModal(result.src)
+		}
+		this.renderStyleValues(elem.cssStyle, result);
+		
 
 		this.renderStyleValues(elem.cssStyle, result);
 
